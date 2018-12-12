@@ -2,6 +2,7 @@ package es.uvigo.esei.dagss.controladores.administrador;
 
 import es.uvigo.esei.dagss.dominio.daos.FarmaciaDAO;
 import es.uvigo.esei.dagss.dominio.daos.UsuarioDAO;
+
 import es.uvigo.esei.dagss.dominio.entidades.Direccion;
 import es.uvigo.esei.dagss.dominio.entidades.Farmacia;
 import javax.inject.Named;
@@ -24,7 +25,7 @@ public class GestionFarmaciasControlador implements Serializable {
 
     @Inject
     FarmaciaDAO farmaciaDAO;
-
+           
     @Inject
     UsuarioDAO usuarioDAO;
 

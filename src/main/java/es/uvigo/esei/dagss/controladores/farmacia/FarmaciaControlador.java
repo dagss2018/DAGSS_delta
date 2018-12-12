@@ -79,7 +79,7 @@ public class FarmaciaControlador implements Serializable {
                 if (autenticacionControlador.autenticarUsuario(farmacia.getId(), password,
                         TipoUsuario.FARMACIA.getEtiqueta().toLowerCase())) {
                     farmaciaActual = farmacia;
-                    destino = "privado/index";
+                    destino = "privado/filtroTarjetaSanitario";
                 } else {
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Credenciales de acceso incorrectas", ""));
                 }
