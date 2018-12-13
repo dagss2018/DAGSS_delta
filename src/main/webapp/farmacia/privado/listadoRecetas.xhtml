@@ -39,21 +39,24 @@
                                    <f:convertDateTime pattern="dd/MM/yyyy" locale="es_ES" timeZone="Europe/Madrid"/>
                                 </h:outputText>
                             </b:dataTableColumn>
-                                                  
-
                             <b:dataTableColumn label="Estado">
                                 <h:outputText value="#{rec.estadoReceta}" />
                             </b:dataTableColumn>  
                             <b:dataTableColumn label="Farmacia Dispensadora" orderable="false">
                                 <h:outputText value="#{rec.farmaciaDispensadora.nombreFarmacia}" />
                             </b:dataTableColumn> 
-                           
+                            <b:dataTableColumn label="" orderable="false">                               
+                                <b:commandButton id="botonCambiarEstado" icon-awesome="pencil" tooltip="Cambiar estado" ajax="true"  
+                                                 actionListener="#{gestionPrescripcionesFarmaciasControlador.doModificarEstado(rec)}" 
+                                                 update=":formularioCambiarEstado:modalCambiar"
+                                                 oncomplete="$('.modal-ver-class').modal('show')" />                  
+                            </b:dataTableColumn>
                         </b:dataTable>
                     </b:panel>
                 </b:container> 
-            </h:form>         
+            </h:form>   
+            <ui:include src="fragmentoCambiarEstado.xhtml"/>
         </ui:define>
-
     </ui:composition>
 
 </html>

@@ -8,6 +8,7 @@ package es.uvigo.esei.dagss.controladores.farmacia;
 import es.uvigo.esei.dagss.dominio.daos.PacienteDAO;
 import es.uvigo.esei.dagss.dominio.daos.PrescripcionDAO;
 import es.uvigo.esei.dagss.dominio.daos.RecetaDAO;
+import es.uvigo.esei.dagss.dominio.entidades.EstadoReceta;
 import es.uvigo.esei.dagss.dominio.entidades.Paciente;
 import es.uvigo.esei.dagss.dominio.entidades.Prescripcion;
 import es.uvigo.esei.dagss.dominio.entidades.Receta;
@@ -36,6 +37,10 @@ public class PrescripcionesFarmaciaControlador implements Serializable {
     private Prescripcion prescripcion;
     
     private List<Receta> recetas;
+    
+    private EstadoReceta estadoReceta;
+    
+    private Receta receta;
 
     @EJB
     PrescripcionDAO prescripcionDAO;
@@ -89,7 +94,28 @@ public class PrescripcionesFarmaciaControlador implements Serializable {
     public Prescripcion getPrescripcion() {
         return prescripcion;
     }
-        
+    
+    public EstadoReceta getEstadoReceta() {
+        return estadoReceta;
+    }
+
+    public void setEstadoReceta(EstadoReceta estadoReceta) {
+        this.estadoReceta = estadoReceta;
+    }
+    
+     public EstadoReceta[] getEstadosRecetas() {
+        return EstadoReceta.values();
+    }
+
+    public Receta getReceta() {
+        return receta;
+    }
+
+    public void setReceta(Receta receta) {
+        this.receta = receta;
+    }
+    
+       
     public String inicializar() {
         String destino = null;
         if (parametrosInvalidos()) {
@@ -106,10 +132,9 @@ public class PrescripcionesFarmaciaControlador implements Serializable {
         String destino = null;
         this.prescripcion = p; 
         this.recetas = p.getRecetas();
-        //this.recetas = this.recetaDAO.getRecetas(p.getId());
-        this.recetas.forEach((rec) -> {
+        /*this.recetas.forEach((rec) -> {
             System.out.println("Receta: " + rec.toString());
-        });
+        });*/
        
         if(this.recetas !=null){
             destino = "listadoRecetas";
@@ -117,5 +142,15 @@ public class PrescripcionesFarmaciaControlador implements Serializable {
              FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "No existen recetas para esta prescripción", ""));
         }
         return destino;        
+    }
+    public void doModificarEstado(Receta rec){
+        System.out.println("Receta: "+rec);
+            this.estadoReceta = rec.getEstado();
+            this.receta = rec;
+    }
+    public void doGuardarEstado(){
+        this.receta.setEstado(this.estadoReceta);
+        recetaDAO.actualizar(this.receta);
+        recetas = this.prescripcion.getRecetas();
     }
 }
