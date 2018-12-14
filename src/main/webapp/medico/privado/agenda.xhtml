@@ -13,7 +13,7 @@
         </ui:define>
 
         <ui:define name="menu">
-            <ui:include src="/administrador/plantillas/menuAdministrador.xhtml"/>                
+            <ui:include src="/administrador/plantillas/menuMedico.xhtml"/>                
         </ui:define>
 
         <ui:define name="contenido">
@@ -45,7 +45,7 @@
                             </b:dataTableColumn>
 
                             <b:dataTableColumn label="Paciente" >
-                                <h:outputText value="#{cita.paciente}" />
+                                <h:outputText value="#{paciente.nombre}" />
                             </b:dataTableColumn>                        
                         </b:dataTable>
                     </b:panel>
