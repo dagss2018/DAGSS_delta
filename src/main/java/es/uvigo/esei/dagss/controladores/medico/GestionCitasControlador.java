@@ -6,6 +6,7 @@ import es.uvigo.esei.dagss.dominio.daos.MedicoDAO;
 import es.uvigo.esei.dagss.dominio.daos.PacienteDAO;
 import es.uvigo.esei.dagss.dominio.entidades.Cita;
 import es.uvigo.esei.dagss.dominio.entidades.Medico;
+import es.uvigo.esei.dagss.dominio.entidades.Paciente;
 import es.uvigo.esei.dagss.dominio.entidades.TipoUsuario;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
@@ -30,7 +31,10 @@ import javax.inject.Inject;
 public class GestionCitasControlador implements Serializable{
     
     private Medico medicoActual;
-    private Map<Cita, String> listaCitas;
+    private Cita cita;
+    private Paciente paciente;
+    private List<Cita> listaCitas;
+    private Map<Cita,String> agenda;
     
     @EJB
     private MedicoDAO medicoDAO;
