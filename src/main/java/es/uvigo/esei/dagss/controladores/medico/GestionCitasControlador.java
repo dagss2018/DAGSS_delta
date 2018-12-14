@@ -33,7 +33,7 @@ public class GestionCitasControlador implements Serializable{
     private Medico medicoActual;
     private String dni;
     private String numeroColegiado;
-    private Cita cita;
+    private Cita citaActual;
     private List<Paciente> listaPacientes;
     private List<Cita> listaCitas;
     private Map<Cita,String> agenda;
@@ -49,7 +49,8 @@ public class GestionCitasControlador implements Serializable{
     
     public GestionCitasControlador(){}
     
-        public String getDni() {
+    
+    public String getDni() {
         return dni;
     }
 
@@ -73,6 +74,19 @@ public class GestionCitasControlador implements Serializable{
         this.medicoActual = medicoActual;
     }
     
+    public List<Cita> getCitas(){
+        return listaCitas;
+    }
+    
+    public Cita getCitaActual(){
+        return citaActual;
+    }
+    
+    public void setCitaActual(Cita cita){
+        citaActual = cita;
+    }
+
+    
     private Medico recuperarDatosMedico() {
         Medico medico = null;
         if (dni != null) {
@@ -83,5 +97,6 @@ public class GestionCitasControlador implements Serializable{
         }
         return medico;
     }
+    
     
 }
