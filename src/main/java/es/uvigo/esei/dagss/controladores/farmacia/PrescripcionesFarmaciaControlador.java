@@ -5,19 +5,23 @@
  */
 package es.uvigo.esei.dagss.controladores.farmacia;
 
+import es.uvigo.esei.dagss.controladores.autenticacion.AutenticacionControlador;
 import es.uvigo.esei.dagss.dominio.daos.PacienteDAO;
 import es.uvigo.esei.dagss.dominio.daos.PrescripcionDAO;
 import es.uvigo.esei.dagss.dominio.daos.RecetaDAO;
 import es.uvigo.esei.dagss.dominio.entidades.EstadoReceta;
+import es.uvigo.esei.dagss.dominio.entidades.Farmacia;
 import es.uvigo.esei.dagss.dominio.entidades.Paciente;
 import es.uvigo.esei.dagss.dominio.entidades.Prescripcion;
 import es.uvigo.esei.dagss.dominio.entidades.Receta;
 import java.io.Serializable;
+
 import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 /**
@@ -41,6 +45,8 @@ public class PrescripcionesFarmaciaControlador implements Serializable {
     private EstadoReceta estadoReceta;
     
     private Receta receta;
+    
+    private Farmacia farmacia;
 
     @EJB
     PrescripcionDAO prescripcionDAO;
@@ -50,6 +56,9 @@ public class PrescripcionesFarmaciaControlador implements Serializable {
     
     @EJB 
     RecetaDAO recetaDAO;
+    
+     @Inject
+    private AutenticacionControlador autenticacionControlador;
     
     public String getNumTarjeta() {
         return numTarjeta;
@@ -114,8 +123,7 @@ public class PrescripcionesFarmaciaControlador implements Serializable {
     public void setReceta(Receta receta) {
         this.receta = receta;
     }
-    
-       
+      
     public String inicializar() {
         String destino = null;
         if (parametrosInvalidos()) {
@@ -149,6 +157,9 @@ public class PrescripcionesFarmaciaControlador implements Serializable {
             this.receta = rec;
     }
     public void doGuardarEstado(){
+        this.farmacia  = (Farmacia) this.autenticacionControlador.getUsuarioActual();
+        System.out.println("Farmacia: "+this.farmacia.getNombreFarmacia());
+        this.receta.setFarmaciaDispensadora(this.farmacia);
         this.receta.setEstado(this.estadoReceta);
         recetaDAO.actualizar(this.receta);
         recetas = this.prescripcion.getRecetas();
