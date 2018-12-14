@@ -31,8 +31,10 @@ import javax.inject.Inject;
 public class GestionCitasControlador implements Serializable{
     
     private Medico medicoActual;
+    private String dni;
+    private String numeroColegiado;
     private Cita cita;
-    private Paciente paciente;
+    private List<Paciente> listaPacientes;
     private List<Cita> listaCitas;
     private Map<Cita,String> agenda;
     
@@ -47,6 +49,39 @@ public class GestionCitasControlador implements Serializable{
     
     public GestionCitasControlador(){}
     
+        public String getDni() {
+        return dni;
+    }
+
+    public void setDni(String dni) {
+        this.dni = dni;
+    }
+
+    public String getNumeroColegiado() {
+        return numeroColegiado;
+    }
+
+    public void setNumeroColegiado(String numeroColegiado) {
+        this.numeroColegiado = numeroColegiado;
+    }
     
+    public Medico getMedicoActual() {
+        return medicoActual;
+    }
+
+    public void setMedicoActual(Medico medicoActual) {
+        this.medicoActual = medicoActual;
+    }
+    
+    private Medico recuperarDatosMedico() {
+        Medico medico = null;
+        if (dni != null) {
+            medico = medicoDAO.buscarPorDNI(dni);
+        }
+        if ((medico == null) && (numeroColegiado != null)) {
+            medico = medicoDAO.buscarPorNumeroColegiado(numeroColegiado);
+        }
+        return medico;
+    }
     
 }
