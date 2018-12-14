@@ -26,17 +26,14 @@ import javax.inject.Inject;
  * @author Juan
  */
 
-@Named(value = "gestionCitasControlador")
+@Named(value = "GestionCitasControlador")
 @SessionScoped
 public class GestionCitasControlador implements Serializable{
     
     private Medico medicoActual;
-    private String dni;
-    private String numeroColegiado;
     private Cita citaActual;
-    private List<Paciente> listaPacientes;
-    private List<Cita> listaCitas;
-    private Map<Cita,String> agenda;
+    private List<Paciente> pacientes;
+    private List<Cita> citas;
     
     @EJB
     private MedicoDAO medicoDAO;
@@ -47,24 +44,12 @@ public class GestionCitasControlador implements Serializable{
     @EJB
     private CitaDAO citaDAO;
     
+    @Inject
+    private AutenticacionControlador autenticacionControlador;
+     
+     
     public GestionCitasControlador(){}
     
-    
-    public String getDni() {
-        return dni;
-    }
-
-    public void setDni(String dni) {
-        this.dni = dni;
-    }
-
-    public String getNumeroColegiado() {
-        return numeroColegiado;
-    }
-
-    public void setNumeroColegiado(String numeroColegiado) {
-        this.numeroColegiado = numeroColegiado;
-    }
     
     public Medico getMedicoActual() {
         return medicoActual;
@@ -75,7 +60,11 @@ public class GestionCitasControlador implements Serializable{
     }
     
     public List<Cita> getCitas(){
-        return listaCitas;
+        return citas;
+    }
+    
+     public List<Paciente> getPacientes(){
+        return pacientes;
     }
     
     public Cita getCitaActual(){
@@ -86,17 +75,17 @@ public class GestionCitasControlador implements Serializable{
         citaActual = cita;
     }
 
-    
-    private Medico recuperarDatosMedico() {
-        Medico medico = null;
-        if (dni != null) {
-            medico = medicoDAO.buscarPorDNI(dni);
-        }
-        if ((medico == null) && (numeroColegiado != null)) {
-            medico = medicoDAO.buscarPorNumeroColegiado(numeroColegiado);
-        }
-        return medico;
+    public boolean parametrosInvalidos(){
+        return medicoActual==null;
     }
     
+    public String inicializar(){        
+        this.medicoActual = (Medico) this.autenticacionControlador.getUsuarioActual();
+        System.out.println(medicoActual.getId());
+        this.citas = this.citaDAO.buscarPorMedicoID(medicoActual.getId());
+        this.pacientes = this.pacienteDAO.buscarTodos();
+        
+        return "agenda";
+    }    
     
 }

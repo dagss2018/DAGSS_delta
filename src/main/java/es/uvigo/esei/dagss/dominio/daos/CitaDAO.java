@@ -24,10 +24,10 @@ public class CitaDAO  extends GenericoDAO<Cita>{
         return filtrarResultadoUnico(q);
     }
     
-    public List<Cita> buscarPorMedicoID(String MedicoId) {
-        TypedQuery<Cita> q = em.createQuery("SELECT c FROM Cita AS c "
-                                            + "  WHERE c.medico_id = :id", Cita.class);
-        q.setParameter("id", MedicoId);
+    public List<Cita> buscarPorMedicoID(Long medicoId) {
+        TypedQuery<Cita> q = em.createQuery("SELECT c FROM Cita AS c JOIN FETCH c.medico  WHERE c.medico.id = :id"
+               , Cita.class);
+        q.setParameter("id", medicoId);
         
         return q.getResultList();
     }
