@@ -12,7 +12,6 @@ import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.List;
-import java.util.Map;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -26,20 +25,13 @@ import javax.inject.Inject;
  * @author Juan
  */
 
-@Named(value = "GestionCitasControlador")
+@Named(value = "gestionCitasMedicoControlador")
 @SessionScoped
 public class GestionCitasControlador implements Serializable{
     
     private Medico medicoActual;
     private Cita citaActual;
-    private List<Paciente> pacientes;
     private List<Cita> citas;
-    
-    @EJB
-    private MedicoDAO medicoDAO;
-    
-    @EJB
-    private PacienteDAO pacienteDAO;
     
     @EJB
     private CitaDAO citaDAO;
@@ -63,10 +55,6 @@ public class GestionCitasControlador implements Serializable{
         return citas;
     }
     
-     public List<Paciente> getPacientes(){
-        return pacientes;
-    }
-    
     public Cita getCitaActual(){
         return citaActual;
     }
@@ -79,13 +67,20 @@ public class GestionCitasControlador implements Serializable{
         return medicoActual==null;
     }
     
+    public void doVer(Cita cita) {
+        citaActual = cita;   // Otra alternativa: volver a refrescarlos desde el DAO
+    }
+    
     public String inicializar(){        
         this.medicoActual = (Medico) this.autenticacionControlador.getUsuarioActual();
         System.out.println(medicoActual.getId());
         this.citas = this.citaDAO.buscarPorMedicoID(medicoActual.getId());
-        this.pacientes = this.pacienteDAO.buscarTodos();
         
         return "agenda";
     }    
+    
+     public String doVolver() {
+        return "../index?faces-redirect=true";
+    }
     
 }

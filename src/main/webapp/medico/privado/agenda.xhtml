@@ -21,7 +21,7 @@
                 <b:container fluid="true">
                     <b:panel title="Listado de Citas" collapsible="false">
                         <b:dataTable id="tablaListado"  class="tablaListadoClass"
-                                     value="#{GestionCitasControlador.citas}"
+                                     value="#{gestionCitasMedicoControlador.citas}"
                                      var="cita" 
                                      page-length="5" page-length-menu="[5,10,20]">
                             <b:dataTableColumn label="Id">
@@ -29,11 +29,15 @@
                             </b:dataTableColumn>
                             
                             <b:dataTableColumn label="Fecha">
-                                <h:outputText value="#{cita.fecha}" />
+                                <h:outputText value="#{cita.fecha}">
+                                <f:convertDateTime pattern="dd/MM/yy"/>
+                                </h:outputText>
                             </b:dataTableColumn>                    
 
                             <b:dataTableColumn label="Hora">
-                                <h:outputText value="#{cita.hora}" />
+                                <h:outputText value="#{cita.hora}">
+                                <f:convertDateTime pattern="hh:mm"/>
+                                </h:outputText>
                             </b:dataTableColumn>
 
                             <b:dataTableColumn label="Duracion">
@@ -46,12 +50,19 @@
 
                             <b:dataTableColumn label="Paciente" >
                                 <h:outputText value="#{cita.paciente.nombre} #{cita.paciente.apellidos}" />
-                            </b:dataTableColumn>                        
+                            </b:dataTableColumn>      
+                            
+                            <b:dataTableColumn label="" orderable="false">
+                                <b:commandButton id="botonVer" icon-awesome="book" value="Formulario de Atencion al Paciente" tooltip="formulario de atencion al paciente" ajax="true"  
+                                                 actionListener="#{gestionCitasMedicoControlador.doVer(cita)}" 
+                                                 update=":formularioVer:modalVer"
+                                                 oncomplete="$('.modal-ver-class').modal('show')" />
+                            </b:dataTableColumn>    
                         </b:dataTable>
                     </b:panel>
                 </b:container>
             </h:form>         
-
+            <ui:include src="fragmentoVer.xhtml"/>
         </ui:define>
 
     </ui:composition>
