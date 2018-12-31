@@ -7,6 +7,7 @@ import es.uvigo.esei.dagss.dominio.daos.PacienteDAO;
 import es.uvigo.esei.dagss.dominio.entidades.Cita;
 import es.uvigo.esei.dagss.dominio.entidades.Medico;
 import es.uvigo.esei.dagss.dominio.entidades.Paciente;
+import es.uvigo.esei.dagss.dominio.entidades.EstadoCita;
 import es.uvigo.esei.dagss.dominio.entidades.TipoUsuario;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
@@ -77,9 +78,14 @@ public class GestionCitasControlador implements Serializable{
         this.citas = this.citaDAO.buscarPorMedicoID(medicoActual.getId());
         
         return "agenda";
-    }    
+    } 
     
-     public String doVolver() {
+    public boolean esPendiente(Cita cita){
+        if(cita.getEstado().equals(EstadoCita.PLANIFICADA)) return true;
+        else return false;
+    }
+    
+    public String doVolver() {
         return "../index?faces-redirect=true";
     }
     

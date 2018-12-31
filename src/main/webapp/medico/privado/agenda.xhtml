@@ -56,6 +56,7 @@
                                 <b:commandButton id="botonVer" icon-awesome="book" value="Formulario de Atencion al Paciente" tooltip="formulario de atencion al paciente" ajax="true"  
                                                  actionListener="#{gestionCitasMedicoControlador.doVer(cita)}" 
                                                  update=":formularioVer:modalVer"
+                                                 rendered="#{gestionCitasMedicoControlador.esPendiente(cita)}"
                                                  oncomplete="$('.modal-ver-class').modal('show')" />
                             </b:dataTableColumn>    
                         </b:dataTable>
