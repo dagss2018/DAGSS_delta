@@ -39,6 +39,9 @@ public class GestionCitasControlador implements Serializable{
     
     @Inject
     private AutenticacionControlador autenticacionControlador;
+    
+    @Inject
+    private GestionPrescripcionesControlador prescripcionesControlador;
      
      
     public GestionCitasControlador(){}
@@ -88,6 +91,10 @@ public class GestionCitasControlador implements Serializable{
     public void doCompletar(){
         citaActual = this.citaDAO.actualizarCita(citaActual.getId(), EstadoCita.COMPLETADA);
         this.citas = this.citaDAO.buscarPorMedicoID(medicoActual.getId());
+    }
+    
+    public String inicializarPrescripcion(){
+        return prescripcionesControlador.inicializar(citaActual);
     }
     
     public String doVolver() {
