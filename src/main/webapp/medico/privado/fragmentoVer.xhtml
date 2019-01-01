@@ -36,6 +36,11 @@
                         <h:outputLabel value="Paciente" for="paciente"/>
                         <h:outputText id="paciente" value="#{gestionCitasMedicoControlador.citaActual.paciente.nombre} #{gestionCitasMedicoControlador.citaActual.paciente.apellidos}"/>
                         
+                        <b:commandButton id="botonCompletar" icon-awesome="book" value="Marcar como completada" tooltip="Marcar como completada" ajax="true" 
+                                         update=":formularioListado:tablaListado :mensajesGlobal"
+                                         actionListener="#{gestionCitasMedicoControlador.doCompletar()}"
+                                         oncomplete="$('.modal-ver-class').modal('hide')"/>
+                        
                     </b:panelGrid>
                 </b:panel>
                 <f:facet name="footer">

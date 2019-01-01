@@ -5,6 +5,7 @@
 package es.uvigo.esei.dagss.dominio.daos;
 
 import es.uvigo.esei.dagss.dominio.entidades.Cita;
+import es.uvigo.esei.dagss.dominio.entidades.EstadoCita;
 import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -30,6 +31,12 @@ public class CitaDAO  extends GenericoDAO<Cita>{
         q.setParameter("id", medicoId);
         
         return q.getResultList();
+    }
+    
+    public Cita actualizarCita(Long citaId, EstadoCita estado){
+        Cita cita = buscarPorId(citaId);
+        cita.setEstado(estado);
+        return actualizar(cita);
     }
     
 }

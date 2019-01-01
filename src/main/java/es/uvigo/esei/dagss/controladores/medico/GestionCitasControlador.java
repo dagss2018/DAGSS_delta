@@ -34,7 +34,7 @@ public class GestionCitasControlador implements Serializable{
     private Cita citaActual;
     private List<Cita> citas;
     
-    @EJB
+    @Inject
     private CitaDAO citaDAO;
     
     @Inject
@@ -83,6 +83,11 @@ public class GestionCitasControlador implements Serializable{
     public boolean esPendiente(Cita cita){
         if(cita.getEstado().equals(EstadoCita.PLANIFICADA)) return true;
         else return false;
+    }
+    
+    public void doCompletar(){
+        citaActual = this.citaDAO.actualizarCita(citaActual.getId(), EstadoCita.COMPLETADA);
+        this.citas = this.citaDAO.buscarPorMedicoID(medicoActual.getId());
     }
     
     public String doVolver() {
