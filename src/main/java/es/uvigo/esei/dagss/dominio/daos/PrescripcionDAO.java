@@ -28,4 +28,6 @@ public class PrescripcionDAO extends GenericoDAO<Prescripcion> {
 
         return q.getResultList();
     }
+    
+    
 }

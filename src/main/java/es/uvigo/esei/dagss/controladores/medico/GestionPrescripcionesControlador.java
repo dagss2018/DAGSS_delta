@@ -33,8 +33,9 @@ public class GestionPrescripcionesControlador implements Serializable{
 
     private Medico medicoActual;
     private Cita citaActual;
+    private Prescripcion prescripcionActual;
     private List<Prescripcion> prescripciones;
-    private List<Medicamento> medicamentos;
+    //private List<Medicamento> medicamentos;
     
     @Inject
     private PrescripcionDAO prescripcionDAO;
@@ -53,7 +54,7 @@ public class GestionPrescripcionesControlador implements Serializable{
         this.medicoActual = (Medico) this.autenticacionControlador.getUsuarioActual();
         this.citaActual = cita;
         this.prescripciones = prescripcionDAO.buscarPorPaciente(cita.getPaciente().getId(), dateFormat.format(date));
-        this.medicamentos = medicamentoDAO.buscarTodos();
+        //this.medicamentos = medicamentoDAO.buscarTodos();
         
         return "prescripciones";
     } 
@@ -62,4 +63,42 @@ public class GestionPrescripcionesControlador implements Serializable{
         return prescripciones;
     }
     
+    public Prescripcion getPrescripcionActual(){
+        return prescripcionActual;
+    }
+    
+    public Cita getCitaActual(){
+        return citaActual;
+    }
+    public Medico getMedicoActual(){
+        return medicoActual;
+    }
+    
+    public void setPrescripcionActual(Prescripcion prescripcion){
+        prescripcionActual = prescripcion;
+    }
+    
+    public List<Medicamento> getListadoMedicamentos(){
+        return medicamentoDAO.buscarTodos();
+    
+    }
+    
+    public void doNuevo(){
+        prescripcionActual = new Prescripcion(); 
+        prescripcionActual.setPaciente(citaActual.getPaciente());
+        prescripcionActual.setMedico(medicoActual);
+    }
+    
+    public void doGuardarNuevo() {
+        // Crea un nuevo centro de salud
+        prescripcionActual = prescripcionDAO.crear(prescripcionActual);
+        // Actualiza lista de centros de salud a mostrar
+        prescripciones = prescripcionDAO.buscarTodos();
+    }
+    
+    public void doEliminar(Prescripcion prescripcion) {
+        System.out.println(">>> llama a elimina con "+prescripcion);
+        prescripcionDAO.eliminar(prescripcion);
+        prescripciones = prescripcionDAO.buscarTodos(); // Actualizar lista de centros
+    }
 }

@@ -59,11 +59,22 @@
                             <b:dataTableColumn label="Fabricante" >
                                 <h:outputText value="#{prescripcion.medicamento.fabricante}" />
                             </b:dataTableColumn>      
-                            
+                            <b:dataTableColumn label="" orderable="false">
+                                <b:commandButton id="botonBorrar" icon-awesome="trash" tooltip="Eliminar" ajax="true" 
+                                                 actionListener="#{gestionPrescripcionesControlador.doEliminar(prescripcion)}"
+                                                 update="@(.tablaListadoClass)"/>
+                            </b:dataTableColumn>  
                         </b:dataTable>
+                        <f:facet name="footer">
+                            <b:commandButton id="botonNuevo" icon-awesome="plus" value="Crear Prescripcion" tooltip="Nueva prescripcion" ajax="true"
+                                             actionListener="#{gestionPrescripcionesControlador.doNuevo()}" 
+                                             update=":formularioNuevo:modalNuevo"
+                                             oncomplete="$('.modal-nuevo-class').modal('show')"/>
+                        </f:facet>
                     </b:panel>
                 </b:container>
-            </h:form>         
+            </h:form>    
+            <ui:include src="fragmentoNuevaPres.xhtml"/>
         </ui:define>
 
     </ui:composition>
