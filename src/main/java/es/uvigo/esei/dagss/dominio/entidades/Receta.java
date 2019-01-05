@@ -149,6 +149,11 @@ public class Receta implements Serializable {
         return true;
     }
 
+    @Override
+    public String toString() {
+        return "Receta{" + "id=" + id + ", prescripcion=" + prescripcion + ", cantidad=" + cantidad + ", inicioValidez=" + inicioValidez + ", finValidez=" + finValidez + ", estadoReceta=" + estadoReceta + ", farmaciaDispensadora=" + farmaciaDispensadora + '}';
+    }
+
 
 
     

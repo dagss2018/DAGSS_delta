@@ -4,6 +4,7 @@
 package es.uvigo.esei.dagss.dominio.daos;
 
 import es.uvigo.esei.dagss.dominio.entidades.Farmacia;
+import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.TypedQuery;
