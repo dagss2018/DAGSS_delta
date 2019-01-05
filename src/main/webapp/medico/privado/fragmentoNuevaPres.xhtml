@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui">
+    <ui:composition>
+        <h:form id="formularioNuevo">
+            <b:modal id="modalNuevo" class="modal-nuevo-class" title="Crear Prescripcion">
+                <b:panel title="Crear Prescripcion" 
+                         rendered="#{not empty gestionPrescripcionesControlador.prescripcionActual}" 
+                         collapsible="false">
+                    <h:outputLabel value="Medicamento" for="medicamento"/>
+                    <b:selectOneMenu id="medicamento" value="#{gestionPrescripcionesControlador.prescripcionActual.medicamento}"
+                                     converter="omnifaces.SelectItemsConverter">                
+                        <f:selectItems var="itemMedicamento" value="#{gestionPrescripcionesControlador.listadoMedicamentos}"                                           
+                                       itemValue="#{itemMedicamento}" 
+                                       itemLabel="#{itemMedicamento.nombre}, #{itemMedicamento.familia}, #{itemMedicamento.fabricante}. Prin act: #{itemMedicamento.principioActivo} | Dosis: #{itemMedicamento.numeroDosis}" />
+                    </b:selectOneMenu>  
+
+                    <h:outputLabel value="Dosis" for="dosis"/>
+                    <b:touchSpin id="dosis" value="#{gestionPrescripcionesControlador.prescripcionActual.dosis}" min="5" max="1500" step="5"/>
+                    
+                    <h:outputLabel value="Fecha Inicio" for="fechaInicio"/>
+                    <b:dateTimePicker id="fechaIncio" value="#{gestionPrescripcionesControlador.prescripcionActual.fechaInicio}" locale="es_ES" show-time="false" allow-input-toggle="true"/>
+
+                    <h:outputLabel value="Fecha Fin" for="fechaFin"/>
+                    <b:dateTimePicker id="fechaFin" value="#{gestionPrescripcionesControlador.prescripcionActual.fechaFin}" locale="es_ES" show-time="false" allow-input-toggle="true"/>
+
+                    <h:outputLabel value="Medico" for="medico"/>
+                    <b:inputText value="#{gestionPrescripcionesControlador.prescripcionActual.medico}" readonly="true"/>
+                    
+                    <h:outputLabel value="Paciente" for="paciente"/>
+                    <b:inputText value="#{gestionPrescripcionesControlador.prescripcionActual.paciente}" readonly="true"/>
+                </b:panel>
+                <f:facet name="footer">
+                    <b:commandButton value="Crear" 
+                                     ajax="true" process="@form" update=":formularioListado:tablaListado :mensajesGlobal" 
+                                     actionListener="#{gestionPrescripcionesControlador.doGuardarNuevo()}"  
+                                     oncomplete="$('.modal-nuevo-class').modal('hide')"/>
+                    <b:button value="Cerrar" dismiss="modal"/>
+                </f:facet>
+            </b:modal>
+        </h:form>
+    </ui:composition>
+</html>
+

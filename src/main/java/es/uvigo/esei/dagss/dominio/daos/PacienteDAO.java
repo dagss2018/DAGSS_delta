@@ -13,6 +13,13 @@ import javax.persistence.TypedQuery;
 @LocalBean
 public class PacienteDAO extends GenericoDAO<Paciente> {
 
+    public Paciente buscarPorID(String id) {
+        TypedQuery<Paciente> q = em.createQuery("SELECT p FROM Paciente AS p "
+                                              + "  WHERE p.id = :id", Paciente.class);
+        q.setParameter("id", id);
+        return filtrarResultadoUnico(q);
+    }
+    
     public Paciente buscarPorDNI(String dni) {
         TypedQuery<Paciente> q = em.createQuery("SELECT p FROM Paciente AS p "
                                               + "  WHERE p.dni = :dni", Paciente.class);

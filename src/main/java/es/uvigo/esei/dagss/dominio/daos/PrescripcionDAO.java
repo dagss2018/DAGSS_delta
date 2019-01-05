@@ -23,5 +23,11 @@ public class PrescripcionDAO extends GenericoDAO<Prescripcion> {
         q.setParameter("paciente", id);
         return q.getResultList();
     }
-    
+    public List<Prescripcion> buscarPorPaciente(Long id, String date) {
+        TypedQuery<Prescripcion> q = em.createQuery("SELECT p FROM Prescripcion AS p JOIN FETCH p.paciente  WHERE p.paciente.id = :id AND (p.fechaFin) > :date ", Prescripcion.class);
+        q.setParameter("id", id);
+        q.setParameter("date", date);
+
+        return q.getResultList();
+    }
 }
