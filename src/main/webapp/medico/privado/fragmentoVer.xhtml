@@ -40,6 +40,10 @@
                                          update=":formularioListado:tablaListado :mensajesGlobal"
                                          actionListener="#{gestionCitasMedicoControlador.doCompletar()}"
                                          oncomplete="$('.modal-ver-class').modal('hide')"/>
+                        <b:commandButton id="botonAusente" icon-awesome="book" value="Marcar como ausente" tooltip="Marcar como ausente" ajax="true" 
+                                         update=":formularioListado:tablaListado :mensajesGlobal"
+                                         actionListener="#{gestionCitasMedicoControlador.doAusente()}"
+                                         oncomplete="$('.modal-ver-class').modal('hide')"/>
                         
                         <b:button id="botonPrescripciones" icon-awesome="book" value="Formulario de Prescripciones" tooltip="Formulario de Prescripciones" 
                                          outcome="#{gestionCitasMedicoControlador.inicializarPrescripcion()}"/>

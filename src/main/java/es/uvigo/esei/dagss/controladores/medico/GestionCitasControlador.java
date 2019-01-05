@@ -93,6 +93,13 @@ public class GestionCitasControlador implements Serializable{
         this.citas = this.citaDAO.buscarPorMedicoID(medicoActual.getId());
     }
     
+    public void doAusente(){
+        citaActual = this.citaDAO.actualizarCita(citaActual.getId(), EstadoCita.AUSENTE);
+        System.out.println("ID: "+citaActual.getId());
+        System.out.println("Estado: "+EstadoCita.AUSENTE);
+        this.citas = this.citaDAO.buscarPorMedicoID(medicoActual.getId());
+    }
+    
     public String inicializarPrescripcion(){
         return prescripcionesControlador.inicializar(citaActual);
     }
