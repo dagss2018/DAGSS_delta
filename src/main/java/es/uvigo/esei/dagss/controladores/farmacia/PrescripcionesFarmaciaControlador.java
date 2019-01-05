@@ -140,10 +140,6 @@ public class PrescripcionesFarmaciaControlador implements Serializable {
         String destino = null;
         this.prescripcion = p; 
         this.recetas = p.getRecetas();
-        /*this.recetas.forEach((rec) -> {
-            System.out.println("Receta: " + rec.toString());
-        });*/
-       
         if(this.recetas !=null){
             destino = "listadoRecetas";
         }else{
